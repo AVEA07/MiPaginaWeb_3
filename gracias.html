@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Gracias!</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="gracias">
+  <section class="mensaje-gracias">
+    <h1>¡Gracias por contactarme!</h1>
+    <p id="mensaje-personalizado">Tu mensaje ha sido enviado correctamente. Te responderé lo antes posible.</p>
+    <a href="index.html">← Volver a la página principal</a>
+    <br><br>
+    <a href="tabla.html">📋 Ver Tabla de Datos Enviados</a>
+  </section>
+  <script>
+    const nombre = localStorage.getItem("nombreUsuario");
+    const mensaje = document.getElementById("mensaje-personalizado");
+    if (nombre) {
+      mensaje.textContent = `Hola ${nombre}, recibirás mi respuesta pronto.`;
+    }
+  </script>
+</body>
+</html>

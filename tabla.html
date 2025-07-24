@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabla de Contactos</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+
+<body>
+
+  <!-- Sección para mostrar datos almacenados -->
+  <section aria-labelledby="titulo-tabla">
+    <h2 id="titulo-tabla">Datos Registrados del Formulario</h2>
+
+    <!-- Tabla con encabezados y espacio para datos -->
+    <table border="1" cellspacing="0" cellpadding="10">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Mensaje</th>
+          <th scope="col">Acción</th> <!-- Nueva columna para botón borrar -->
+        </tr>
+      </thead>
+      <tbody id="tabla-datos">
+        <!-- Aquí insertamos filas dinámicamente -->
+      </tbody>
+    </table>
+
+    <!-- Botón para volver al inicio -->
+    <br>
+    <button onclick="window.location.href='index.html'" class="boton-regresar">
+      ← Volver a la página principal
+    </button>
+  </section>
+
+    <!-- Modal de confirmación personalizado -->
+  <div id="modal-confirmacion" class="modal">
+    <div class="modal-contenido">
+      <p>¿Estás seguro de que quieres borrar este mensaje?</p>
+      <div class="modal-botones">
+        <button id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+        <button id="btn-confirmar" class="btn-confirmar">Sí, borrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let datos = JSON.parse(localStorage.getItem("contactos")) || [];
+    const tabla = document.getElementById("tabla-datos");
+
+    // Elementos del modal
+    const modal = document.getElementById("modal-confirmacion");
+    const btnCancelar = document.getElementById("btn-cancelar");
+    const btnConfirmar = document.getElementById("btn-confirmar");
+
+    // Guardar el índice del contacto a eliminar
+    let indiceAEliminar = null;
+
+    function guardarDatos() {
+      localStorage.setItem("contactos", JSON.stringify(datos));
+    }
+
+    function mostrarDatos() {
+      tabla.innerHTML = "";
+
+      if (datos.length > 0) {
+        datos.forEach((contacto, index) => {
+          const fila = document.createElement("tr");
+          fila.innerHTML = `
+            <td>${contacto.nombre}</td>
+            <td>${contacto.correo}</td>
+            <td>${contacto.mensaje}</td>
+            <td>
+              <button onclick="mostrarModal(${index})" class="btn-borrar">Borrar</button>
+            </td>
+          `;
+          tabla.appendChild(fila);
+        });
+      } else {
+        tabla.innerHTML = "<tr><td colspan='4'>No hay datos aún.</td></tr>";
+      }
+    }
+
+    // Mostrar modal de confirmación
+    function mostrarModal(index) {
+      indiceAEliminar = index;
+      modal.style.display = "flex";
+    }
+
+    // Cancelar la eliminación
+    btnCancelar.addEventListener("click", () => {
+      modal.style.display = "none";
+      indiceAEliminar = null;
+    });
+
+    // Confirmar eliminación
+    btnConfirmar.addEventListener("click", () => {
+      if (indiceAEliminar !== null) {
+        datos.splice(indiceAEliminar, 1);
+        guardarDatos();
+        mostrarDatos();
+        modal.style.display = "none";
+        indiceAEliminar = null;
+      }
+    });
+
+    // Cargar datos al inicio
+    mostrarDatos();
+  </script>
+
+</body>
+</html>

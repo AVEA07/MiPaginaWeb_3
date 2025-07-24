@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Página Personal - Angel Villafuerte</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header>
+    <h1>Angel Villafuerte</h1>
+    <img src="img/yo.jpeg" alt="Foto personal">
+    <nav style="position:absolute; top:20px; right:20px;">
+      <a href="tabla.html" style="color:white; font-weight:bold;">Ver Tabla de Datos</a>
+    </nav>
+  </header>
+
+  <!-- INTERESES Y HABILIDADES -->
+  <section>
+    <h2>Mis Intereses y Habilidades</h2>
+    <ul>
+      <li>Programación Web</li>
+      <li>Diseño Gráfico</li>
+      <li>Edición de Video</li>
+      <li>Lectura de cuentos de Buzzati 📚</li>
+      <li>Creatividad Digital</li>
+    </ul>
+  </section>
+
+  <!-- ENLACE A VIDEO FAVORITO -->
+  <section>
+    <h2>Mi Video Favorito 🎥</h2>
+    <p>Mira este video que me inspira:</p>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Ver en YouTube</a>
+  </section>
+
+  <!-- FORMULARIO DE CONTACTO -->
+  <section>
+    <h2>Formulario de Contacto</h2>
+    <form id="formulario" class="formulario-contacto">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+
+      <label for="correo">Correo Electrónico:</label>
+      <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre").value;
+      const correo = document.getElementById("correo").value;
+      const mensaje = document.getElementById("mensaje").value;
+
+      const datos = JSON.parse(localStorage.getItem("contactos")) || [];
+      datos.push({ nombre, correo, mensaje });
+      localStorage.setItem("contactos", JSON.stringify(datos));
+      localStorage.setItem("nombreUsuario", nombre);
+
+      window.location.href = "gracias.html";
+    });
+  </script>
+
+</body>
+    </html>
